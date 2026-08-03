@@ -1,0 +1,245 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.nav {
+    width: 220px;            /* Width of the navigation column */
+    display: flex;
+    flex-direction: column;  /* Stack items vertically */
+    gap: 10px;               /* Space between each box */
+    padding: 16px;
+    background-color: #f8fafc; /* Light background for the sidebar area */
+    min-height: calc(100vh - 80px); /* Fill screen height minus header */
+    border-right: 1px solid #e2e8f0;
+}
+
+/* Base Style for Each Nav Box */
+.nav-box {
+    display: block;
+    padding: 12px 16px;
+    background-color: #ffffff;
+    color: #1e293b;
+    text-decoration: none;   /* Removes default blue underline */
+    font-weight: 500;
+    font-size: 0.95rem;
+    border-radius: 8px;     /* Rounded box corners */
+    border: 1px solid #e2e8f0;
+    transition: all 0.2s ease-in-out;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+/* Hover Effect */
+.nav-box:hover {
+    background-color: #0f172a; /* Dark background on hover */
+    color: #ffffff;            /* White text on hover */
+    border-color: #0f172a;
+    transform: translateX(4px);/* Subtle shift to the right */
+}
+
+/* Optional: Logout Special Styling */
+.nav-box.logout {
+    margin-top: auto;          /* Pushes logout to the very bottom */
+    color: #ef4444;
+    border-color: #fecaca;
+    background-color: #fef2f2;
+}
+
+.nav-box.logout:hover {
+    background-color: #dc2626;
+    color: #ffffff;
+    border-color: #dc2626;
+}
+.reports-layout {
+    display: flex;
+    align-items: flex-start;
+    min-height: 100vh;
+}
+
+.nav {
+    width: 230px;
+    flex-shrink: 0;
+}
+
+.reports-page-container {
+    flex: 1;
+    padding: 25px;
+}
+.reports-page-container {
+  padding: 24px;
+  background-color: #f8fafc;
+  min-height: calc(100vh - 60px);
+  box-sizing: border-box;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+.reports-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.reports-header h1 {
+  font-size: 1.5rem;
+  color: #0f172a;
+  margin: 0 0 6px 0;
+}
+
+.reports-header p {
+  color: #64748b;
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+.report-search input {
+  padding: 10px 16px;
+  width: 320px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  outline: none;
+  background: #ffffff;
+}
+
+.report-search input:focus {
+  border-color: #0284c7;
+  box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
+}
+
+/* Three Tab Buttons Row */
+.reports-tabs {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.tab-btn {
+  flex: 1;
+  min-width: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #475569;
+  transition: all 0.2s ease;
+}
+
+.tab-btn:hover {
+  border-color: #cbd5e1;
+  background: #f1f5f9;
+}
+
+.tab-count {
+  background: #e2e8f0;
+  color: #334155;
+  padding: 2px 10px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+}
+
+/* Tab Active Styles */
+.tab-btn.ongoing.active {
+  border-color: #0284c7;
+  background: #e0f2fe;
+  color: #0369a1;
+}
+
+.tab-btn.ongoing.active .tab-count {
+  background: #0284c7;
+  color: #ffffff;
+}
+
+.tab-btn.completed.active {
+  border-color: #16a34a;
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.tab-btn.completed.active .tab-count {
+  background: #16a34a;
+  color: #ffffff;
+}
+
+.tab-btn.maintenance.active {
+  border-color: #d97706;
+  background: #fef3c7;
+  color: #b45309;
+}
+
+.tab-btn.maintenance.active .tab-count {
+  background: #d97706;
+  color: #ffffff;
+}
+
+/* Table Card */
+.table-card {
+  background: #ffffff;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  overflow-x: auto;
+}
+
+.reports-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.875rem;
+}
+
+.reports-table th {
+  background-color: #f8fafc;
+  color: #475569;
+  padding: 14px 16px;
+  font-weight: 600;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.reports-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid #f1f5f9;
+  color: #334155;
+}
+
+.bus-id-tag {
+  color: #0f172a;
+}
+
+.distance-badge {
+  background-color: #f1f5f9;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #475569;
+}
+
+/* Status Pills */
+.status-pill {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: capitalize;
+}
+
+.status-pill.ongoing { background: #e0f2fe; color: #0369a1; }
+.status-pill.completed { background: #dcfce7; color: #15803d; }
+.status-pill.maintenance { background: #fef3c7; color: #b45309; }
+
+.no-records {
+  text-align: center;
+  padding: 24px;
+  color: #94a3b8;
+}
