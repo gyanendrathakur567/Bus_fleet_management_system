@@ -1,8 +1,11 @@
-import { useState } from "react";
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Dashboard.css'
 import './Dashboard'
+import './BusListPage'
 import './ReportsPage'
+import './RouteListPage'
+import './AddBusPage'
 import './ReportsPage.css'
 
 
@@ -53,9 +56,9 @@ const ReportsPage = () => {
             <nav className="nav">
                 <Link to="/" className="nav-box">Home</Link>
                 <Link to="/ReportsPage" className="nav-box">Report</Link>
-                <a href="#" className="nav-box">Bus List</a>
-                <a href="#" className="nav-box">Add Bus</a>
-                <a href="#" className="nav-box">Route List</a>
+                <Link to="/BusListPage" className="nav-box">Bus List</Link>
+                <Link to="/AddBusPage" className="nav-box active">Add Bus</Link>
+                <Link to="/RouteListPage" className="nav-box active">Route List</Link>
                 <a href="#" className="nav-box">Add Route</a>
                 <a href="#" className="nav-box">Assign Bus</a>
                 <a href="#" className="nav-box logout">Logout</a>

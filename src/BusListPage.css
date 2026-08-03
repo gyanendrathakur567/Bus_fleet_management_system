@@ -1,0 +1,215 @@
+/* Layout Container */
+.reports-layout {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f8fafc;
+}
+
+.reports-page-container {
+  flex: 1;
+  padding: 32px;
+  overflow-x: hidden;
+}
+
+/* Page Header & Top Controls */
+.reports-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 24px;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.reports-header h1 {
+  font-size: 26px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 6px 0;
+}
+
+.reports-header p {
+  color: #64748b;
+  font-size: 14px;
+  margin: 0;
+}
+
+/* Search Bar & Dropdown Select */
+.report-search input {
+  padding: 10px 16px;
+  width: 280px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  font-size: 14px;
+  outline: none;
+  background-color: #ffffff;
+  transition: all 0.2s ease;
+}
+
+.report-search input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.filter-select {
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  background-color: #ffffff;
+  color: #334155;
+  font-size: 14px;
+  outline: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.filter-select:focus {
+  border-color: #2563eb;
+}
+
+/* Add New Bus Button */
+.submit-btn {
+  background-color: #2563eb;
+  color: #ffffff !important;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.submit-btn:hover {
+  background-color: #1d4ed8;
+}
+
+/* Tabs & Status Counters */
+.reports-tabs {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.tab-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 20px;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  color: #475569;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tab-btn:hover {
+  background-color: #f1f5f9;
+}
+
+.tab-btn.active {
+  background-color: #e0f2fe;
+  color: #0369a1;
+  border-color: #0284c7;
+}
+
+.tab-count {
+  background: #f1f5f9;
+  color: #475569;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+}
+
+.tab-btn.active .tab-count {
+  background: #0284c7;
+  color: #ffffff;
+}
+
+/* Fleet Table Styling */
+.table-card {
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  overflow-x: auto;
+}
+
+.reports-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 14px;
+}
+
+.reports-table th {
+  background-color: #f8fafc;
+  color: #475569;
+  font-weight: 600;
+  padding: 16px 20px;
+  border-bottom: 1px solid #e2e8f0;
+  white-space: nowrap;
+}
+
+.reports-table td {
+  padding: 16px 20px;
+  border-bottom: 1px solid #f1f5f9;
+  color: #334155;
+  vertical-align: middle;
+}
+
+.reports-table tbody tr:hover {
+  background-color: #f8fafc;
+}
+
+/* Badges & Pills */
+.bus-id-tag {
+  color: #0f172a;
+  font-weight: 700;
+}
+
+.distance-badge {
+  background: #f1f5f9;
+  color: #334155;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+/* Climate & Operational Status Badges */
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* AC / Active Badge */
+.status-pill.ongoing {
+  background-color: #dbeafe;
+  color: #1d4ed8;
+}
+
+/* Non-AC Badge */
+.status-pill.completed {
+  background-color: #dcfce7;
+  color: #15803d;
+}
+
+/* Maintenance Badge */
+.status-pill.maintenance {
+  background-color: #fef3c7;
+  color: #b45309;
+}
+
+/* Empty State */
+.no-records {
+  text-align: center;
+  color: #94a3b8;
+  padding: 40px 20px;
+}
