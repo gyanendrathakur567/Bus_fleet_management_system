@@ -1,263 +1,148 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Sidebar from "./components/Sidebar";
 
 const AddBusPage = () => {
   const navigate = useNavigate();
 
-  // Updated Form State with dedicated 'isAc' select value
-  const [formData, setFormData] = useState({
-    id: '',
-    name: '',
-    brand: '',
-    model: '',
-    type: 'Seater',       // Default Bus Type (Sleeper removed)
-    isAc: 'ac',           // 'ac' or 'non-ac'
-    capacity: 40,
-    status: 'active'
+  const [bus, setBus] = useState({
+    id: "",
+    number: "",
+    name: "",
+    type: "",
+    capacity: "",
+    status: "Available",
   });
 
-  const [message, setMessage] = useState({ type: '', text: '' });
-
-  const popularBrands = ['Volvo', 'Tata Motors', 'Scania', 'Ashok Leyland', 'Eicher', 'BharatBenz'];
-
-  // Handle Input Changes
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
+    setBus({
+      ...bus,
+      [e.target.name]: e.target.value,
+    });
   };
 
-  // Handle Form Submission
-  const handleSubmit = (e) => {
+  const addBus = (e) => {
     e.preventDefault();
 
-    if (!formData.id.trim() || !formData.name.trim() || !formData.brand.trim()) {
-      setMessage({ type: 'error', text: 'Please fill in all required fields marked with *' });
+    if (
+      !bus.id ||
+      !bus.number ||
+      !bus.name ||
+      !bus.type ||
+      !bus.capacity
+    ) {
+      alert("Please fill all fields.");
       return;
     }
 
-    const newBus = {
-      ...formData,
-      id: formData.id.toUpperCase().trim(),
-      isAc: formData.isAc === 'ac', // Convert string select value back to boolean
-      capacity: Number(formData.capacity)
-    };
-
-    console.log('Submitting Bus Data:', newBus);
-
-    setMessage({ type: 'success', text: `Bus ${newBus.id} (${newBus.name}) added successfully!` });
-
-    <Routes>
-  <Route path="/BusListPage" element={<BusListPage />} />
-</Routes>
+    alert("Bus added successfully.");
+    navigate("/BusListPage");
   };
 
   return (
-  <div className="flex min-h-screen bg-slate-100">
-    {/* Sidebar */}
-    <Sidebar />
+    <div className="flex min-h-screen bg-slate-100">
+      <Sidebar />
 
-    {/* Main Content */}
-    <div className="flex-1 p-8">
-      {/* Header */}
-      <div className="flex justify-between items-center mb-8">
-        <div>
-          <h1 className="text-3xl font-bold text-slate-800">
-            Add New Fleet Vehicle
-          </h1>
-          <p className="text-slate-500 mt-1">
-            Register a new bus into the fleet database.
-          </p>
-        </div>
+      <div className="flex-1 p-8">
+        <h1 className="text-3xl font-bold text-slate-800 mb-2">
+          Add New Bus
+        </h1>
 
-        <Link
-          to="/BusListPage"
-          className="bg-slate-800 text-white px-5 py-2 rounded-lg hover:bg-slate-900 transition"
-        >
-          ← Back to Bus List
-        </Link>
-      </div>
+        <p className="text-slate-500 mb-8">
+          Register a new bus in the fleet system.
+        </p>
 
-      {/* Alert */}
-      {message.text && (
-        <div
-          className={`mb-6 rounded-lg p-4 font-medium ${
-            message.type === "success"
-              ? "bg-green-100 text-green-700"
-              : "bg-red-100 text-red-700"
-          }`}
-        >
-          {message.text}
-        </div>
-      )}
-
-      {/* Form Card */}
-      <div className="bg-white rounded-xl shadow-lg p-8">
-        <form onSubmit={handleSubmit}>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-
-            {/* Bus ID */}
-            <div>
-              <label className="block font-semibold mb-2">
-                Bus ID *
-              </label>
+        <div className="bg-white shadow rounded-xl p-6 border-t-4 border-slate-800">
+          <form onSubmit={addBus}>
+            <div className="grid grid-cols-2 gap-5">
               <input
                 type="text"
                 name="id"
-                value={formData.id}
+                placeholder="Bus ID"
+                value={bus.id}
                 onChange={handleChange}
-                placeholder="BUS-101"
-                className="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
+                className="border border-slate-300 px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-700"
               />
-            </div>
 
-            {/* Bus Name */}
-            <div>
-              <label className="block font-semibold mb-2">
-                Bus Name *
-              </label>
+              <input
+                type="text"
+                name="number"
+                placeholder="Bus Number"
+                value={bus.number}
+                onChange={handleChange}
+                className="border border-slate-300 px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-700"
+              />
+
               <input
                 type="text"
                 name="name"
-                value={formData.name}
+                placeholder="Bus Name"
+                value={bus.name}
                 onChange={handleChange}
-                placeholder="City Express"
-                className="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
+                className="border border-slate-300 px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-700"
               />
-            </div>
-
-            {/* Brand */}
-            <div>
-              <label className="block font-semibold mb-2">
-                Brand *
-              </label>
-              <input
-                type="text"
-                name="brand"
-                list="brand-suggestions"
-                value={formData.brand}
-                onChange={handleChange}
-                className="w-full border rounded-lg px-4 py-2"
-              />
-
-              <datalist id="brand-suggestions">
-                {popularBrands.map((brand) => (
-                  <option key={brand} value={brand} />
-                ))}
-              </datalist>
-            </div>
-
-            {/* Model */}
-            <div>
-              <label className="block font-semibold mb-2">
-                Model
-              </label>
-              <input
-                type="text"
-                name="model"
-                value={formData.model}
-                onChange={handleChange}
-                className="w-full border rounded-lg px-4 py-2"
-              />
-            </div>
-
-            {/* Type */}
-            <div>
-              <label className="block font-semibold mb-2">
-                Bus Type
-              </label>
 
               <select
                 name="type"
-                value={formData.type}
+                value={bus.type}
                 onChange={handleChange}
-                className="w-full border rounded-lg px-4 py-2"
+                className="border border-slate-300 px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-700"
               >
-                <option value="Seater">Seater</option>
-                <option value="Semi-Sleeper">Semi Sleeper</option>
-                <option value="Mini Bus">Mini Bus</option>
-                <option value="Double Decker">Double Decker</option>
+              <option value="">Select Bus Type</option>
+              <option value="AC Seater">AC Seater</option>
+              <option value="Non-AC Seater">Non-AC Seater</option>
+              <option value="Sleeper">Sleeper</option>
+              <option value="AC Sleeper">AC Sleeper</option>
+              <option value="AC/Non-AC Sleeper">AC/Non-AC Sleeper</option>
+              <option value="Luxury Coach">Luxury Coach</option>
+              <option value="Mini Bus">Mini Bus</option>
+              <option value="Electric Bus">Electric Bus</option>
+              <option value="Volvo">Volvo</option>
+              <option value="Other">Other</option>
               </select>
-            </div>
-
-            {/* AC */}
-            <div>
-              <label className="block font-semibold mb-2">
-                Climate
-              </label>
-
-              <select
-                name="isAc"
-                value={formData.isAc}
-                onChange={handleChange}
-                className="w-full border rounded-lg px-4 py-2"
-              >
-                <option value="ac">AC</option>
-                <option value="non-ac">Non AC</option>
-              </select>
-            </div>
-
-            {/* Capacity */}
-            <div>
-              <label className="block font-semibold mb-2">
-                Capacity
-              </label>
 
               <input
                 type="number"
                 name="capacity"
-                value={formData.capacity}
+                placeholder="Seat Capacity"
+                value={bus.capacity}
                 onChange={handleChange}
-                className="w-full border rounded-lg px-4 py-2"
+                className="border border-slate-300 px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-700"
               />
-            </div>
-
-            {/* Status */}
-            <div>
-              <label className="block font-semibold mb-2">
-                Status
-              </label>
 
               <select
                 name="status"
-                value={formData.status}
+                value={bus.status}
                 onChange={handleChange}
-                className="w-full border rounded-lg px-4 py-2"
+                className="border border-slate-300 px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-700"
               >
-                <option value="active">Active</option>
-                <option value="maintenance">Maintenance</option>
+                <option>Available</option>
+                <option>Running</option>
+                <option>Maintenance</option>
               </select>
             </div>
 
-          </div>
+            <div className="mt-8 flex gap-4">
+              <button
+                type="submit"
+                className="bg-slate-800 hover:bg-slate-700 text-white px-8 py-3 rounded-lg transition"
+              >
+                Add Bus
+              </button>
 
-          {/* Buttons */}
-          <div className="flex justify-end gap-4 mt-8">
-
-            <button
-              type="button"
-              onClick={() => navigate("/BusListPage")}
-              className="px-6 py-2 rounded-lg border hover:bg-gray-100"
-            >
-              Cancel
-            </button>
-
-            <button
-              type="submit"
-              className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg"
-            >
-              Save & Register Bus
-            </button>
-
-          </div>
-        </form>
+              <button
+                type="button"
+                onClick={() => navigate("/BusListPage")}
+                className="bg-slate-500 hover:bg-slate-600 text-white px-8 py-3 rounded-lg transition"
+              >
+                Cancel
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
 };
 
 export default AddBusPage;

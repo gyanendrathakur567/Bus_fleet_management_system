@@ -1,235 +1,404 @@
-import React, { useState } from "react";
+import React from "react";
 import Sidebar from "./components/Sidebar";
 
-const ReportsPage = () => {
-  const [activeTab, setActiveTab] = useState("ongoing");
-  const [searchQuery, setSearchQuery] = useState("");
+import {
+  BarChart,
+  Bar,
+  PieChart,
+  Pie,
+  Cell,
+  XAxis,
+  YAxis,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
 
-  const allBuses = [
+const ReportsPage = () => {
+
+  const tickets = [
+    { id: "TKT-101", amount: 500, status: "Confirmed" },
+    { id: "TKT-102", amount: 350, status: "Confirmed" },
+    { id: "TKT-103", amount: 600, status: "Cancelled" },
+    { id: "TKT-104", amount: 450, status: "Confirmed" },
+    { id: "TKT-105", amount: 300, status: "Confirmed" },
+  ];
+
+  const passengers = [
+    { id: "P-101" },
+    { id: "P-102" },
+    { id: "P-103" },
+    { id: "P-104" },
+    { id: "P-105" },
+    { id: "P-106" },
+  ];
+
+  const buses = [
+    { id: "BUS-101" },
+    { id: "BUS-102" },
+    { id: "BUS-103" },
+    { id: "BUS-104" },
+    { id: "BUS-105" },
+  ];
+
+  const income = tickets.reduce(
+    (sum, ticket) => sum + ticket.amount,
+    0
+  );
+
+  const confirmedTickets = tickets.filter(
+    (ticket) => ticket.status === "Confirmed"
+  ).length;
+
+  const cancelledTickets = tickets.filter(
+    (ticket) => ticket.status === "Cancelled"
+  ).length;
+
+  const paymentData = [
     {
-      id: "BUS-101",
-      name: "City Express 01",
-      driver: "John Doe",
-      route: "Route A (Downtown)",
-      distance: "42 km",
-      status: "completed",
-      fuel: "12L",
-      time: "09:30 AM",
+      name: "UPI",
+      value: 7000,
     },
     {
-      id: "BUS-105",
-      name: "Urban Shuttle 05",
-      driver: "Alex Brown",
-      route: "Route D (Airport Direct)",
-      distance: "68 km",
-      status: "completed",
-      fuel: "18L",
-      time: "08:15 AM",
+      name: "Card",
+      value: 4500,
     },
     {
-      id: "BUS-109",
-      name: "Metro Cruiser 09",
-      driver: "David Miller",
-      route: "Route E (South Hub)",
-      distance: "35 km",
-      status: "completed",
-      fuel: "10L",
-      time: "10:00 AM",
-    },
-    {
-      id: "BUS-104",
-      name: "City Express 04",
-      driver: "Sarah Smith",
-      route: "Route C (East Express)",
-      distance: "24 km",
-      status: "ongoing",
-      fuel: "8L",
-      time: "En Route (Stop 4)",
-    },
-    {
-      id: "BUS-108",
-      name: "Campus Liner 08",
-      driver: "Mike Johnson",
-      route: "Route B (West Campus)",
-      distance: "15 km",
-      status: "ongoing",
-      fuel: "5L",
-      time: "En Route (Stop 2)",
-    },
-    {
-      id: "BUS-112",
-      name: "Suburban Transit 12",
-      driver: "Emma Davis",
-      route: "Route F (North Line)",
-      distance: "30 km",
-      status: "ongoing",
-      fuel: "9L",
-      time: "En Route (Stop 6)",
-    },
-    {
-      id: "BUS-102",
-      name: "City Express 02",
-      driver: "Unassigned",
-      route: "N/A (Depot)",
-      distance: "0 km",
-      status: "maintenance",
-      fuel: "N/A",
-      time: "Engine & Brake Check",
-    },
-    {
-      id: "BUS-107",
-      name: "Urban Shuttle 07",
-      driver: "Unassigned",
-      route: "N/A (Depot)",
-      distance: "0 km",
-      status: "maintenance",
-      fuel: "N/A",
-      time: "Oil Replacement",
+      name: "Cash",
+      value: 3000,
     },
   ];
 
-  const ongoingList = allBuses.filter((bus) => bus.status === "ongoing");
-  const completedList = allBuses.filter((bus) => bus.status === "completed");
-  const maintenanceList = allBuses.filter((bus) => bus.status === "maintenance");
+  const COLORS = [
+    "#334155",
+    "#64748b",
+    "#94a3b8",
+  ];
 
-  const getCurrentList = () => {
-    if (activeTab === "completed") return completedList;
-    if (activeTab === "maintenance") return maintenanceList;
-    return ongoingList;
-  };
+  const busData = [
+    {
+      bus: "BUS-101",
+      income: 12000,
+    },
+    {
+      bus: "BUS-102",
+      income: 15000,
+    },
+    {
+      bus: "BUS-103",
+      income: 18000,
+    },
+    {
+      bus: "BUS-104",
+      income: 9000,
+    },
+    {
+      bus: "BUS-105",
+      income: 13500,
+    },
+  ];
 
-  const filteredBuses = getCurrentList().filter(
-    (bus) =>
-      bus.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      bus.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      bus.driver.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      bus.route.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const routeData = [
+    {
+      route: "Delhi → Noida",
+      tickets: 48,
+      performance: "Excellent",
+    },
+    {
+      route: "Delhi → Agra",
+      tickets: 35,
+      performance: "Good",
+    },
+    {
+      route: "Noida → Jaipur",
+      tickets: 29,
+      performance: "Average",
+    },
+    {
+      route: "Noida → Gurgaon",
+      tickets: 52,
+      performance: "Excellent",
+    },
+  ];
 
   return (
     <div className="flex min-h-screen bg-slate-100">
-      {/* Sidebar */}
+
       <Sidebar />
 
-      {/* Main Content */}
       <div className="flex-1 p-8">
-        {/* Header */}
-        <div className="flex justify-between items-center mb-8">
-          <div>
-            <h1 className="text-3xl font-bold text-slate-800">
-              Fleet Operational Reports
-            </h1>
-            <p className="text-slate-500 mt-2">
-              Comprehensive logs and real-time records of all bus activity.
+
+        <h1 className="text-3xl font-bold text-slate-800">
+          Reports & Analytics
+        </h1>
+
+        <p className="text-slate-500 mt-2 mb-8">
+          Complete Bus Fleet Performance Overview
+        </p>
+
+        {/* Summary Cards */}
+
+        <div className="grid grid-cols-5 gap-5 mb-8">
+
+          <div className="bg-white shadow rounded-xl p-5 border-l-4 border-slate-800">
+            <p className="text-slate-500">
+              Revenue
             </p>
+            <h2 className="text-3xl font-bold text-slate-800">
+              ₹{income}
+            </h2>
           </div>
 
-          <input
-            type="text"
-            placeholder="Search by Bus ID, Name, Driver, Route..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="border rounded-lg px-4 py-3 w-80 focus:ring-2 focus:ring-blue-500 outline-none"
-          />
+          <div className="bg-white shadow rounded-xl p-5 border-l-4 border-slate-800">
+            <p className="text-slate-500">
+              Tickets
+            </p>
+            <h2 className="text-3xl font-bold text-slate-800">
+              {tickets.length}
+            </h2>
+          </div>
+
+          <div className="bg-white shadow rounded-xl p-5 border-l-4 border-slate-800">
+            <p className="text-slate-500">
+              Passengers
+            </p>
+            <h2 className="text-3xl font-bold text-slate-800">
+              {passengers.length}
+            </h2>
+          </div>
+
+          <div className="bg-white shadow rounded-xl p-5 border-l-4 border-slate-800">
+            <p className="text-slate-500">
+              Buses
+            </p>
+            <h2 className="text-3xl font-bold text-slate-800">
+              {buses.length}
+            </h2>
+          </div>
+
+          <div className="bg-white shadow rounded-xl p-5 border-l-4 border-slate-800">
+            <p className="text-slate-500">
+              Cancelled
+            </p>
+            <h2 className="text-3xl font-bold text-slate-800">
+              {cancelledTickets}
+            </h2>
+          </div>
+
         </div>
 
-        {/* Tabs */}
-        <div className="grid grid-cols-3 gap-5 mb-8">
-          <button
-            onClick={() => setActiveTab("ongoing")}
-            className={`p-5 rounded-xl shadow bg-white border-l-4 ${
-              activeTab === "ongoing" ? "border-blue-600" : "border-slate-300"
-            }`}
-          >
-            <div className="text-2xl">🚌</div>
-            <h3 className="font-semibold">Ongoing Trips</h3>
-            <p className="text-3xl font-bold">{ongoingList.length}</p>
-          </button>
+        {/* Charts */}
 
-          <button
-            onClick={() => setActiveTab("completed")}
-            className={`p-5 rounded-xl shadow bg-white border-l-4 ${
-              activeTab === "completed" ? "border-green-600" : "border-slate-300"
-            }`}
-          >
-            <div className="text-2xl">✓</div>
-            <h3 className="font-semibold">Completed Trips</h3>
-            <p className="text-3xl font-bold">{completedList.length}</p>
-          </button>
+        <div className="grid grid-cols-2 gap-8 mb-8">
 
-          <button
-            onClick={() => setActiveTab("maintenance")}
-            className={`p-5 rounded-xl shadow bg-white border-l-4 ${
-              activeTab === "maintenance" ? "border-yellow-500" : "border-slate-300"
-            }`}
-          >
-            <div className="text-2xl">🔧</div>
-            <h3 className="font-semibold">Maintenance</h3>
-            <p className="text-3xl font-bold">{maintenanceList.length}</p>
-          </button>
+          <div className="bg-white shadow rounded-xl p-6">
+
+            <h2 className="text-xl font-bold text-slate-800 mb-5">
+              Bus Wise Income
+            </h2>
+
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart data={busData}>
+                <XAxis dataKey="bus" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Bar
+                  dataKey="income"
+                  fill="#334155"
+                />
+              </BarChart>
+            </ResponsiveContainer>
+
+          </div>
+
+          <div className="bg-white shadow rounded-xl p-6">
+
+            <h2 className="text-xl font-bold text-slate-800 mb-5">
+              Payment Analysis
+            </h2>
+
+            <ResponsiveContainer width="100%" height={300}>
+              <PieChart>
+                <Pie
+                  data={paymentData}
+                  dataKey="value"
+                  nameKey="name"
+                  outerRadius={100}
+                  label
+                >
+                  {paymentData.map((item, index) => (
+                    <Cell
+                      key={index}
+                      fill={COLORS[index]}
+                    />
+                  ))}
+                </Pie>
+
+                <Tooltip />
+                <Legend />
+              </PieChart>
+            </ResponsiveContainer>
+
+          </div>
+
         </div>
 
-        {/* Table */}
-        <div className="bg-white rounded-xl shadow overflow-hidden">
-          <table className="w-full">
-            <thead className="bg-slate-100">
-              <tr>
-                <th className="px-6 py-4 text-left">Bus Number</th>
-                <th className="px-6 py-4 text-left">Bus Name</th>
-                <th className="px-6 py-4 text-left">Assigned Driver</th>
-                <th className="px-6 py-4 text-left">Assigned Route</th>
-                <th className="px-6 py-4 text-left">Distance</th>
-                <th className="px-6 py-4 text-left">Status</th>
-                <th className="px-6 py-4 text-left">Details</th>
-              </tr>
-            </thead>
+        {/* Ticket Status and System Status */}
 
-            <tbody>
-              {filteredBuses.length > 0 ? (
-                filteredBuses.map((bus) => (
-                  <tr key={bus.id} className="border-b hover:bg-slate-50">
-                    <td className="px-6 py-4 font-bold">{bus.id}</td>
-                    <td className="px-6 py-4">{bus.name}</td>
-                    <td className="px-6 py-4">{bus.driver}</td>
-                    <td className="px-6 py-4">{bus.route}</td>
-                    <td className="px-6 py-4">
-                      <span className="bg-slate-200 px-3 py-1 rounded-full">
-                        {bus.distance}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4">
-                      <span
-                        className={`px-3 py-1 rounded-full text-sm font-semibold ${
-                          bus.status === "ongoing"
-                            ? "bg-blue-100 text-blue-700"
-                            : bus.status === "completed"
-                            ? "bg-green-100 text-green-700"
-                            : "bg-yellow-100 text-yellow-700"
-                        }`}
-                      >
-                        {bus.status === "ongoing"
-                          ? "Ongoing"
-                          : bus.status === "completed"
-                          ? "Completed"
-                          : "Maintenance"}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4">{bus.time}</td>
-                  </tr>
-                ))
-              ) : (
+        <div className="grid grid-cols-2 gap-8 mb-8">
+
+          <div className="bg-white shadow rounded-xl p-6">
+
+            <h2 className="text-xl font-bold text-slate-800 mb-5">
+              Ticket Status
+            </h2>
+
+            <p className="mb-3 text-slate-600">
+              Confirmed :
+              <span className="text-slate-800 font-bold ml-2">
+                {confirmedTickets}
+              </span>
+            </p>
+
+            <p className="text-slate-600">
+              Cancelled :
+              <span className="text-slate-800 font-bold ml-2">
+                {cancelledTickets}
+              </span>
+            </p>
+
+          </div>
+
+          <div className="bg-white shadow rounded-xl p-6">
+
+            <h2 className="text-xl font-bold text-slate-800 mb-5">
+              System Status
+            </h2>
+
+            <p className="mb-3 text-slate-600">
+              Server :
+              <span className="text-green-600 font-bold ml-2">
+                Online
+              </span>
+            </p>
+
+            <p className="mb-3 text-slate-600">
+              Database :
+              <span className="text-green-600 font-bold ml-2">
+                Connected
+              </span>
+            </p>
+
+            <p className="text-slate-600">
+              Booking :
+              <span className="text-green-600 font-bold ml-2">
+                Active
+              </span>
+            </p>
+
+          </div>
+
+        </div>
+
+        {/* Route Performance */}
+
+        <div className="bg-white shadow rounded-xl overflow-hidden">
+
+          <h2 className="text-xl font-bold text-slate-800 p-6">
+            Route Performance
+          </h2>
+
+          <div className="overflow-x-auto">
+
+            <table className="w-full text-left">
+
+              <thead className="bg-slate-800 text-white">
                 <tr>
-                  <td colSpan="7" className="text-center py-8 text-slate-500">
-                    No records found
-                  </td>
+                  <th className="px-6 py-4">
+                    Route
+                  </th>
+                  <th className="px-6 py-4">
+                    Tickets
+                  </th>
+                  <th className="px-6 py-4">
+                    Performance
+                  </th>
                 </tr>
-              )}
-            </tbody>
-          </table>
+              </thead>
+
+              <tbody>
+                {
+                  routeData.map((route, index) => (
+                    <tr
+                      key={index}
+                      className="border-b hover:bg-slate-50"
+                    >
+                      <td className="px-6 py-4 font-semibold">
+                        {route.route}
+                      </td>
+
+                      <td className="px-6 py-4">
+                        {route.tickets}
+                      </td>
+
+                      <td className="px-6 py-4">
+                        <span
+                          className="px-4 py-2 rounded-full bg-slate-100 text-slate-700 font-semibold"
+                        >
+                          {route.performance}
+                        </span>
+                      </td>
+                    </tr>
+                  ))
+                }
+              </tbody>
+
+            </table>
+
+          </div>
+
         </div>
+
+        {/* Export Buttons */}
+
+        <div className="flex justify-end gap-4 mt-8">
+
+          <button
+            onClick={() =>
+              alert("Excel Export Coming Soon")
+            }
+            className="bg-slate-800 hover:bg-slate-700 text-white px-6 py-3 rounded-lg"
+          >
+            Export Excel
+          </button>
+
+          <button
+            onClick={() =>
+              alert("PDF Export Coming Soon")
+            }
+            className="bg-slate-800 hover:bg-slate-700 text-white px-6 py-3 rounded-lg"
+          >
+            Export PDF
+          </button>
+
+          <button
+            onClick={() =>
+              window.print()
+            }
+            className="bg-slate-500 hover:bg-slate-600 text-white px-6 py-3 rounded-lg"
+          >
+            Print
+          </button>
+
+        </div>
+
       </div>
+
     </div>
+
   );
+
 };
 
 export default ReportsPage;

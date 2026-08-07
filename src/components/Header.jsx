@@ -1,47 +1,83 @@
-import { Link } from "react-router-dom";
+import React from "react";
+import { useNavigate } from "react-router-dom";
 
-function Header() {
+const Header = () => {
+  const navigate = useNavigate();
+
+  const role = localStorage.getItem("role") || "guest";
+
+  const user =
+    JSON.parse(
+      localStorage.getItem(
+        "logged" + role.charAt(0).toUpperCase() + role.slice(1)
+      )
+    ) || {};
+
+  const logout = () => {
+    localStorage.clear();
+    navigate("/");
+  };
+
+  const today = new Date().toLocaleDateString("en-IN", {
+    weekday: "long",
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  });
+
   return (
-    <header className="bg-slate-900 text-white shadow-md">
-      <div className="mx-auto flex h-16 items-center justify-between px-6">
-        {/* Logo */}
-        <Link to="/" className="flex items-center gap-3 transition hover:opacity-90">
-          <h1 className="text-2xl font-extrabold text-sky-400">BMS</h1>
-          <span className="text-slate-500">|</span>
-          <h2 className="hidden text-lg font-semibold tracking-wide text-white md:block">
-            BUS MANAGEMENT SYSTEM
-          </h2>
-        </Link>
-
-        {/* Right Side */}
+    <header className="bg-gradient-to-r from-indigo-700 via-blue-600 to-cyan-500 shadow-xl">
+      <div className="px-8 py-4 flex justify-between items-center">
+        {/* Left Side */}
         <div className="flex items-center gap-4">
-          {/* Search */}
-          <input
-            type="text"
-            placeholder="Search buses, routes..."
-            className="hidden w-72 rounded-lg border border-slate-600 bg-slate-800 px-4 py-2 text-sm text-white placeholder-slate-400 outline-none transition focus:border-sky-500 md:block"
-          />
-
-          {/* Notification */}
-          <button
-            title="Notifications"
-            className="relative rounded-lg bg-slate-800 p-2 transition hover:bg-slate-700"
-          >
-            <span className="text-xl">🔔</span>
-            <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-red-500"></span>
-          </button>
-
-          {/* User */}
-          <div className="flex items-center gap-3 rounded-lg bg-slate-800 px-3 py-2">
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-sky-500 font-bold text-white">
-              A
-            </div>
-            <span className="hidden font-medium md:block">Admin</span>
+          <div className="w-16 h-16 rounded-2xl bg-white flex items-center justify-center shadow-lg">
+            <span className="text-3xl font-black text-blue-700">B</span>
+          </div>
+          <div>
+            <h1 className="text-3xl font-extrabold text-white tracking-wide">
+              Bus Fleet Management
+            </h1>
+            <p className="text-blue-100 text-sm">
+              Smart Transport & Fleet Monitoring Platform
+            </p>
           </div>
         </div>
+
+        {/* Right Side */}
+        <div className="flex items-center gap-8">
+          <div className="hidden lg:block text-right">
+            <p className="text-white font-semibold">{today}</p>
+            <p className="text-blue-100 text-sm">Welcome Back</p>
+          </div>
+
+          <div className="flex items-center gap-3 bg-white/20 backdrop-blur-md px-4 py-2 rounded-xl">
+            <div>
+              <h3 className="font-bold text-white">{user.name || "Guest"}</h3>
+              <p className="text-blue-100 text-sm uppercase">{role}</p>
+            </div>
+            <div className="w-12 h-12 rounded-full bg-yellow-400 text-slate-800 flex items-center justify-center text-lg font-bold shadow-lg">
+              {user.name ? user.name.charAt(0).toUpperCase() : "G"}
+            </div>
+          </div>
+
+          {role !== "guest" && (
+            <button
+              onClick={logout}
+              className="bg-red-500 hover:bg-red-600 transition px-5 py-2 rounded-xl text-white font-semibold shadow-lg"
+            >
+              Logout
+            </button>
+          )}
+        </div>
+      </div>
+
+      {/* Bottom Status Bar */}
+      <div className="bg-white/10 border-t border-white/20 px-8 py-2 flex justify-between text-sm text-white">
+        <span>Fleet Status : Operational</span>
+        <span>System Version : v1.0.0</span>
       </div>
     </header>
   );
-}
+};
 
 export default Header;
